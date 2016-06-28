@@ -11,11 +11,25 @@ Storage | 8GB
 Display | 5.5" IPS 1280 x 720 px
 Camera  | 8MPx, LED Flash
 
-This branch is for building 5.1.1 based ROMs.
+This branch is for building 6.0 based ROMs.
+
+### Working:
+  - Booting
+  - Wi-Fi
+  - Bluetooth
+  - Camera
+  - Touch
+  - more stuff... need improvement
+
+### Not Working:
+  - GPS
+  - RIL
+  - FM Radio
+  - VPN
 
 ### Other resource:
   - Kernel: 3.10.72 (DaredevilKernel)
-  - Vendor blobs: https://github.com/rohantaneja/android_vendor_lenovo_a7000-a
+  - Vendor blobs: https://github.com/rohantaneja/android_vendor_lenovo_mt6752
 
 ### Credits (Sort by alphabetical order):
   - nofearnohappy

@@ -20,8 +20,9 @@ This branch is for building 5.1.1 based ROMs.
 ### Credits (Sort by alphabetical order):
   - nofearnohappy
   - rohantaneja
-  - xen0n
+  - xen0n (this guy really rocks)
   - Vgdn1942
   - hyperion70
   - ferhung-mtk
+  - Zormax (really thankful for his work)
   - all those who brought up MM to MTK

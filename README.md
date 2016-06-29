@@ -19,16 +19,21 @@ This branch is for building 6.0 based ROMs.
   - Bluetooth
   - Camera
   - Touch
+  - RIL (GSM, CDMA working - BOTH SIM)
+  - Dual Sim
+  - OTG
+  - DoubleTap2Wake (kernel-implementation)
   - more stuff... need improvement
 
-### Not Working:
-  - GPS
-  - RIL
-  - FM Radio
+### Known Bugs:
+  - Audio
+  - Storage (internal not mounting)
+  - GPS (somewhat... working)
+  - FM Radio (FC)
   - VPN
 
 ### Other resource:
-  - Kernel: 3.10.72 (DaredevilKernel)
+  - Kernel: 3.10.101 (DaredevilKernel_v1.2-r2)
   - Vendor blobs: https://github.com/rohantaneja/android_vendor_lenovo_mt6752
 
 ### Credits (Sort by alphabetical order):

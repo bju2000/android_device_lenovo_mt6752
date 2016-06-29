@@ -32,7 +32,7 @@ This branch is for building 6.0 based ROMs.
   - FM Radio (FC)
 
 ### Other resource:
-  - Kernel: 3.10.101 (DaredevilKernel_v1.2-r2)
+  - Kernel: 3.10.102 (DaredevilKernel_v2)
   - Vendor blobs: https://github.com/rohantaneja/android_vendor_lenovo_mt6752
 
 ### Credits (Sort by alphabetical order):

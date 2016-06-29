@@ -1,10 +1,14 @@
 on boot
+//lenovo-sw yexh1 change some definitions
     setprop sys.usb.vid 17EF
-    write /sys/class/android_usb/android0/iManufacturer MediaTek
+    write /sys/class/android_usb/android0/iManufacturer Lenovo
+//lenovo-sw yexh1 
     write /sys/class/android_usb/android0/iProduct ${ro.product.model}
     write /sys/class/android_usb/android0/iSerial ${ro.serialno}
     write /sys/class/android_usb/android0/f_rndis/wceis 1
+//lenovo-sw yexh1 change some definitions
     write /sys/class/android_usb/android0/f_rndis/manufacturer Lenovo
+//lenovo-sw yexh1  
     write /sys/class/android_usb/android0/f_rndis/vendorID ${sys.usb.vid}
     chown system system /sys/class/android_usb/android0/f_acm/port_index
     chmod 0660 /sys/class/android_usb/android0/f_acm/port_index
@@ -15,20 +19,14 @@ on fs
     mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
     write /sys/class/android_usb/android0/f_ffs/aliases adb
 
-
-# Used to disable USB when switching states
-on property:sys.usb.config=none
-    stop adbd
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/bDeviceClass 0
-    write /sys/devices/platform/mt_usb/saving 0
-    setprop sys.usb.state ${sys.usb.config}
-
 #1.acm
 on property:sys.usb.config=acm
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 0006
+//lenovo-sw yexh1 change some definitions
+    write /sys/class/android_usb/android0/idProduct 7439
+    write /sys/class/android_usb/android0/iSerial " "
+//lenovo-sw yexh1 
     write /sys/class/android_usb/android0/f_acm/instances 1
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/bDeviceClass 02
@@ -60,7 +58,11 @@ on property:sys.usb.config=adb,acm
 on property:sys.usb.config=mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 0001
+    # Lenovo-sw yexh1 add 2014-10-21,add for CD-Rom
+    write /sys/class/android_usb/android0/idProduct 743A
+    write /sys/class/android_usb/android0/f_mass_storage/bicr 0
+    write /sys/class/android_usb/android0/f_mass_storage/lun/file "/dev/block/loop0"
+    # Lenovo-sw yexh1   
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
@@ -69,7 +71,11 @@ on property:sys.usb.config=mass_storage
 on property:sys.usb.config=mass_storage,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 7821
+# Lenovo-sw yexh1 add 2014-10-21,add for CD-Rom
+    write /sys/class/android_usb/android0/idProduct 7435
+    write /sys/class/android_usb/android0/f_mass_storage/bicr 0
+    write /sys/class/android_usb/android0/f_mass_storage/lun/file "/dev/block/loop0"
+# Lenovo-sw yexh1  
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     start adbd
@@ -79,8 +85,12 @@ on property:sys.usb.config=mass_storage,adb
 on property:sys.usb.config=mtp
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 2008
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+# Lenovo-sw yexh1 add 2014-10-21,add for CD-Rom
+    write /sys/class/android_usb/android0/idProduct 7882
+    write /sys/class/android_usb/android0/functions mtp,mass_storage
+    write /sys/class/android_usb/android0/f_mass_storage/bicr 1
+    write /sys/class/android_usb/android0/f_mass_storage/lun/file "/dev/block/loop0"
+# Lenovo-sw yexh1 end
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
 
@@ -98,8 +108,12 @@ on property:sys.usb.config=mtp,acm
 on property:sys.usb.config=mtp,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 0C02
-    write /sys/class/android_usb/android0/functions mtp,adb
+# Lenovo-sw yexh1 add 2014-10-21,add for CD-Rom
+    write /sys/class/android_usb/android0/idProduct 7883
+    write /sys/class/android_usb/android0/functions mtp,mass_storage,adb
+    write /sys/class/android_usb/android0/f_mass_storage/bicr 1
+    write /sys/class/android_usb/android0/f_mass_storage/lun/file "/dev/block/loop0"
+# Lenovo-sw yexh1 end
     write /sys/class/android_usb/android0/enable 1
     start adbd
     setprop sys.usb.state ${sys.usb.config}
@@ -108,7 +122,9 @@ on property:sys.usb.config=mtp,adb
 on property:sys.usb.config=mtp,adb,acm
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 200A
+//lenovo-sw yexh1 change some definitions
+    write /sys/class/android_usb/android0/idProduct 7499
+//lenovo-sw yexh1 change some definitions
     write /sys/class/android_usb/android0/f_acm/instances 1
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
@@ -128,7 +144,7 @@ on property:sys.usb.config=mtp,mass_storage
 on property:sys.usb.config=mtp,mass_storage,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 7823
+    write /sys/class/android_usb/android0/idProduct 2017
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     start adbd
@@ -138,7 +154,9 @@ on property:sys.usb.config=mtp,mass_storage,adb
 on property:sys.usb.config=ptp
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 200B
+//lenovo-sw yexh1 change some definitions
+    write /sys/class/android_usb/android0/idProduct 7884
+//lenovo-sw yexh1 change some definitions
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
@@ -157,7 +175,9 @@ on property:sys.usb.config=ptp,acm
 on property:sys.usb.config=ptp,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 7825
+//lenovo-sw yexh1 change some definitions
+    write /sys/class/android_usb/android0/idProduct 7885
+//lenovo-sw yexh1 change some definitions
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     start adbd
@@ -197,7 +217,9 @@ on property:sys.usb.config=ptp,mass_storage,adb
 on property:sys.usb.config=rndis
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 0003
+//lenovo-sw yexh1 change some definitions
+    write /sys/class/android_usb/android0/idProduct 7436
+//lenovo-sw yexh1 change some definitions
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/bDeviceClass 224
     write /sys/class/android_usb/android0/enable 1
@@ -217,7 +239,9 @@ on property:sys.usb.config=rndis,acm
 on property:sys.usb.config=rndis,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 7827
+//lenovo-sw yexh1 change some definitions
+    write /sys/class/android_usb/android0/idProduct 7500
+//lenovo-sw yexh1 change some definitions
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
     start adbd
@@ -248,7 +272,10 @@ on property:sys.usb.config=mass_storage,acm
 on property:sys.usb.config=mass_storage,adb,acm
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct 0005
+//lenovo-sw yexh1 change some definitions
+    write /sys/class/android_usb/android0/idProduct 74ED
+    write /sys/class/android_usb/android0/iSerial " "   
+//lenovo-sw yexh1 change some definitions
     write /sys/class/android_usb/android0/f_acm/instances 1
     write /sys/class/android_usb/android0/functions ${sys.usb.config}
     write /sys/class/android_usb/android0/enable 1
@@ -358,13 +385,14 @@ on property:sys.usb.config=ptp,mass_storage,adb,acm
 
 #34.USB Charging Only configuration
 on property:sys.usb.config=charging
-    stop adbd
-    write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-    write /sys/class/android_usb/android0/idProduct F006
-    write /sys/class/android_usb/android0/functions charging
-    write /sys/class/android_usb/android0/enable 1
     setprop sys.usb.state ${sys.usb.config}
+    setprop sys.usb.charging yes
+
+on property:sys.usb.charging=yes
+    write /sys/devices/platform/mt_usb/cmode 2
+
+on property:sys.usb.charging=no
+    write /sys/devices/platform/mt_usb/cmode 1
 
 #35.USB BICR configuration(mass_storage)
 on property:sys.usb.config=bicr
@@ -458,47 +486,41 @@ on property:sys.usb.config=eem,adb,acm
 # USB midi configuration
 on property:sys.usb.config=midi
 	write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-	write /sys/class/android_usb/android0/idProduct 2046
+    write /sys/class/android_usb/android0/idVendor 17EF
+	write /sys/class/android_usb/android0/idProduct 7436
 	write /sys/class/android_usb/android0/functions ${sys.usb.config}
 	write /sys/class/android_usb/android0/enable 1
 	start adbd
 	setprop sys.usb.state ${sys.usb.config}
-
 # USB midi configuration, with acm
 on property:sys.usb.config=midi,acm
 	write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
+    write /sys/class/android_usb/android0/idVendor 0E8D
 	write /sys/class/android_usb/android0/idProduct 2047
 	write /sys/class/android_usb/android0/f_acm/instances 1
 	write /sys/class/android_usb/android0/functions ${sys.usb.config}
 	write /sys/class/android_usb/android0/enable 1
 	start adbd
 	setprop sys.usb.state ${sys.usb.config}
-
 # USB midi configuration, with adb
 on property:sys.usb.config=midi,adb
 	write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
-	write /sys/class/android_usb/android0/idProduct 2048
+    write /sys/class/android_usb/android0/idVendor 17EF
+	write /sys/class/android_usb/android0/idProduct 749D
 	write /sys/class/android_usb/android0/functions ${sys.usb.config}
 	write /sys/class/android_usb/android0/enable 1
 	start adbd
 	setprop sys.usb.state ${sys.usb.config}
-
 # USB midi configuration, with adb acm
 on property:sys.usb.config=midi,adb,acm
 	write /sys/class/android_usb/android0/enable 0
-    write /sys/class/android_usb/android0/idVendor ${sys.usb.vid}
+    write /sys/class/android_usb/android0/idVendor 0E8D
 	write /sys/class/android_usb/android0/idProduct 2049
 	write /sys/class/android_usb/android0/f_acm/instances 1
 	write /sys/class/android_usb/android0/functions ${sys.usb.config}
 	write /sys/class/android_usb/android0/enable 1
 	start adbd
 	setprop sys.usb.state ${sys.usb.config}
-
-
-   
 #43.acm third port for bt
 on property:sys.usb.config=acm_third
     write /sys/class/android_usb/android0/enable 0
@@ -683,7 +705,7 @@ on property:sys.usb.bicr=yes
 
 on property:sys.usb.bicr=no
     write /sys/class/android_usb/android0/f_mass_storage/bicr 0
-    write /sys/class/android_usb/android0/f_mass_storage/lun/file "0"
+    write /sys/class/android_usb/android0/f_mass_storage/lun/file "off"
 
 on property:mediatek.usb.port.mode=usb
       write /sys/devices/platform/mt_usb/portmode 0

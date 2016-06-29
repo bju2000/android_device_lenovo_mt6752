@@ -21,16 +21,15 @@ This branch is for building 6.0 based ROMs.
   - Touch
   - RIL (GSM, CDMA working - BOTH SIM)
   - Dual Sim
+  - Storage (SDCARD as primary)
   - OTG
   - DoubleTap2Wake (kernel-implementation)
   - more stuff... need improvement
 
 ### Known Bugs:
   - Audio
-  - Storage (internal not mounting)
   - GPS (somewhat... working)
   - FM Radio (FC)
-  - VPN
 
 ### Other resource:
   - Kernel: 3.10.101 (DaredevilKernel_v1.2-r2)

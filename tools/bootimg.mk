@@ -1,4 +1,4 @@
-LOCAL_PATH := device/lenovo/P70
+LOCAL_PATH := device/lenovo/mt6752
 
 MKIMAGE :=  $(LOCAL_PATH)/tools/mkimage
 MKBOOTFS := $(LOCAL_PATH)/tools/mkbootfs
